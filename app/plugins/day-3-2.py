@@ -1,6 +1,6 @@
 import click, numpy
 
-from modules import Constants, console, Timer, Claim
+from modules import console, Timer, Claim, DataProvider
 
 @click.command()
 def executor():
@@ -8,16 +8,17 @@ def executor():
 
     max_x = 1000
     max_y = 1000
+    elements = DataProvider.load('day3')
     claim_ids = []
     timer = Timer()
 
     timer.start()
     claims = numpy.zeros([max_x, max_y])
-    for element in Constants.Day3:
+    for element in elements:
         claim = Claim(element)
         claims = claim.fill_claim(claims)
 
-    for element in Constants.Day3:
+    for element in elements:
         claim = Claim(element)
         if claim.claim_is_alone(claims):
             claim_ids.append(claim.claim_id)

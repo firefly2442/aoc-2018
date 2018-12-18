@@ -1,6 +1,6 @@
 import click, numpy
 
-from modules import Constants, console, Timer, Claim
+from modules import console, Timer, Claim, DataProvider
 
 @click.command()
 def executor():
@@ -13,7 +13,7 @@ def executor():
 
     timer.start()
     claims = numpy.zeros([max_x, max_y])
-    for element in Constants.Day3:
+    for element in DataProvider.load('day3'):
         claim = Claim(element)
         claims = claim.fill_claim(claims)
 

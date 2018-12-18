@@ -1,6 +1,6 @@
 import click
 
-from modules import Constants, console, Timer
+from modules import console, Timer, DataProvider
 
 def hamming_distance(s1, s2):
     return sum(el1 != el2 for el1, el2 in zip(s1, s2))
@@ -12,12 +12,13 @@ def executor():
     timer = Timer()
     used_ids = set([])
     pairs = []
+    ids = DataProvider.load('day2')
 
     timer.start()
-    for id in Constants.Day2:
+    for id in ids:
         if id not in used_ids:
             used_ids.add(id)
-            for inner in Constants.Day2:
+            for inner in ids:
                 if inner in used_ids:
                     continue
 

@@ -1,6 +1,6 @@
 import click, time
 
-from modules import Constants, console, Timer
+from modules import console, Timer, DataProvider
 
 @click.command()
 def executor():
@@ -18,7 +18,7 @@ def executor():
     try:
         while True:
             count += 1
-            for freq in Constants.Day1:
+            for freq in DataProvider.load('day1'):
                 master_freq = master_freq + int(freq)
                 master_freq_set.add(master_freq)
                 master_freq_list.append(master_freq)

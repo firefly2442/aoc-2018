@@ -1,6 +1,6 @@
 import click
 
-from modules import Constants, console, Timer
+from modules import console, Timer, DataProvider
 
 def has(count, id):
     for letter in 'abcdefghijklmnopqrstuvwxyz':
@@ -17,7 +17,7 @@ def executor():
     triplet_count = 0
 
     timer.start()
-    for id in Constants.Day2:
+    for id in DataProvider.load('day2'):
         if has(2, id):
             pair_count += 1
         if has(3, id):
