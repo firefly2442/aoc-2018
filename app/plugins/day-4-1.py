@@ -1,4 +1,4 @@
-import click
+import click, numpy
 
 from modules import Constants, console, Timer, DataProvider
 
@@ -42,7 +42,7 @@ def executor():
     days.sort()
 
     current_guard = None
-    current_guard_cycle = []
+    current_guard_cycle = numpy.zeros([60])
 
     for day in days:
         if day.endswith('begins shift'):
