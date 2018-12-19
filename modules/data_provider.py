@@ -12,3 +12,16 @@ class DataProvider:
                 lines.append(line)
 
         return lines
+
+    @staticmethod
+    @click.pass_context
+    def read(ctx, filename):
+        with open(join(dirname(ctx.obj['BASE_PATH']), 'data', '{}.txt'.format(filename))) as handle:
+            return handle.read()
+
+    @staticmethod
+    @click.pass_context
+    def stream(ctx, filename):
+        with open(join(dirname(ctx.obj['BASE_PATH']), 'data', '{}.txt'.format(filename))) as handle:
+            for line in handle:
+                yield line
