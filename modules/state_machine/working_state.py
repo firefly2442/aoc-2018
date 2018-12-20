@@ -1,6 +1,6 @@
 from modules import console
-from modules.config.enums import Actions
-from modules.guard import GuardProcessor
+from modules.config.enums import Actions, SleepState
+from modules.guard import GuardProcessor, LogDetails
 
 from .state import State
 from .state_machine import FiniteStateMachine
@@ -8,18 +8,15 @@ from .state_machine import FiniteStateMachine
 class WorkingState(State):
     @staticmethod
     def execute(fsm: FiniteStateMachine, line):
-        console.log('State', 'Working state')
+        # console.log('State', 'Working state')
         processed = GuardProcessor.parse_line(line)
 
         if processed.action == Actions.SLEEPING:
-            # TODO: Update this day's action register to begin sleeping here
+            fsm.context.started_sleeping = int(processed.minute)
+
             from .sleeping_state import SleepingState
             fsm.to(SleepingState)
-        elif processed.action == Actions.WORKING:
-            # TODO: Process the current guards items, archive them, and then change
-            from .working_state import WorkingState
-            fsm.to(WorkingState)
         elif processed.action == Actions.NONE:
-            # TODO: No more items, process current guard, archive and then end
+            fsm.context.log.append(LogDetails(fsm.context.date, fsm.context.guard, fsm.context.schedule))
             from .end_state import EndState
             fsm.to(EndState)

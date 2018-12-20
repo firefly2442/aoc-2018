@@ -3,7 +3,7 @@ from modules import Container, console
 from modules.config.enums import Actions
 
 class GuardProcessor:
-    REGEX = r'\[(\d{4}-\d{2}-\d{2}) (\d{2}):(\d{2})\] (falls asleep|wakes up|.*?#(\d.) begins shift)'
+    REGEX = r'\[(\d{4}-\d{2}-\d{2}) (\d{2}):(\d{2})\] (falls asleep|wakes up|.*?#(\d.*) begins shift)'
 
     @staticmethod
     def parse_line(line) -> Container:
@@ -34,8 +34,8 @@ class GuardProcessor:
                 'wakes up': Actions.WAKING,
             }.get(action, Actions.NONE)
 
-        console.table('Date', parsed.date)
-        console.table('Time', '{}:{}'.format(parsed.hour, parsed.minute))
-        console.table('Guard', '{}'.format(parsed.guard))
-        console.table('Action', '{}'.format(parsed.action))
+        # console.table('Date', parsed.date)
+        # console.table('Time', '{}:{}'.format(parsed.hour, parsed.minute))
+        # console.table('Guard', '{}'.format(parsed.guard))
+        # console.table('Action', '{}'.format(parsed.action))
         return parsed

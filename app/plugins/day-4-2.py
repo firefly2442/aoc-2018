@@ -1,10 +1,10 @@
 import click, numpy, re
 from modules import console, Timer, DataProvider
-from modules.state_machine import FiniteStateMachine, StartState, EndState
+from modules.state_machine import FiniteStateMachine, StartState, End2State
 
 @click.command()
 def executor():
-    console.header('day 4, part 1')
+    console.header('day 4, part 2')
 
     timer = Timer()
     days = DataProvider.load('day4')
@@ -16,7 +16,7 @@ def executor():
     for day in days:
         fsm.execute(day.strip())
 
-    fsm.to(EndState)
+    fsm.to(End2State)
     fsm.execute(None)
     timer.end()
 

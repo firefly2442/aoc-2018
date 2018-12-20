@@ -5,3 +5,8 @@ class Actions(Enum):
     WORKING = 1
     SLEEPING = 2
     WAKING = 3
+
+class SleepState(Enum):
+    NONE = 0
+    AWAKE = 1
+    ASLEEP = 2
