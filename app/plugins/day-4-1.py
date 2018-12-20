@@ -1,19 +1,12 @@
-import click, numpy
-
-from modules import Constants, console, Timer, DataProvider
-
-def get_guard_id(day):
-    index = day.find('#')
-    if index < 0:
-        raise click.ClickException('Oops...')
-
-    return day[index+1:].replace('begins shift', '').strip()
-
+import click, numpy, re
+from modules import console, Timer, DataProvider
+from modules.state_machine import FiniteStateMachine, StartState
 
 @click.command()
 def executor():
     console.header('day 4, part 1')
 
+    timer = Timer()
     # days = DataProvider.load('day4')
     days = [
         '[1518-11-01 00:00] Guard #10 begins shift',
@@ -35,30 +28,13 @@ def executor():
         '[1518-11-05 00:55] wakes up',
     ]
 
-    timer = Timer()
-    guards = {}
+    fsm = FiniteStateMachine(StartState)
 
     timer.start()
     days.sort()
-
-    current_guard = None
-    current_guard_cycle = numpy.zeros([60])
-
     for day in days:
-        if day.endswith('begins shift'):
-            if current_guard is not None:
-                if current_guard not in guards:
-                    guards[current_guard] = []
-                guards[current_guard].append(current_guard_cycle)
-
-            current_guard = get_guard_id(day)
-            current_guard_cycle = []
-        else:
-            current_guard_cycle.append(day)
-
+        fsm.execute(day)
     timer.end()
-
-    print(guards)
 
     console.log('Minute', '', fg='cyan', bold=True, color_status=True, include_brackets=True)
     timer.output()
