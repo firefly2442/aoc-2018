@@ -3,10 +3,11 @@ from modules.config.enums import Actions
 from modules.guard import GuardProcessor
 
 from .state import State
+from .state_machine import FiniteStateMachine
 
 class SleepingState(State):
     @staticmethod
-    def execute(fsm, line):
+    def execute(fsm: FiniteStateMachine, line):
         console.log('State', 'Sleeping state')
         processed = GuardProcessor.parse_line(line)
 
