@@ -3,7 +3,7 @@ import click
 class console(object):
     @staticmethod
     def header(msg, width=80, fg='green', bold=True):
-        msg = click.style(' {} '.format(msg.upper()), fg=fg, bold=bold)
+        msg = click.style(' {} '.format(str(msg).upper()), fg=fg, bold=bold)
         click.echo('\n{:-^{width}}'.format(msg, width=width))
 
     @staticmethod
@@ -16,17 +16,17 @@ class console(object):
             arrow = ' -> '
 
         if msg is None:
-            msg = status
+            msg = str(status)
             status = ''
 
         if status:
             status_width = width - 2 if include_brackets else width
-            status = '{:>{width}}'.format(status, width=status_width)
+            status = '{:>{width}}'.format(str(status), width=status_width)
 
         if color_status:
             status = click.style(status, fg=fg, bold=bold)
         else:
-            msg = click.style(msg, fg=fg, bold=bold)
+            msg = click.style(str(msg), fg=fg, bold=bold)
 
         if status:
             if include_brackets:
